@@ -1,5 +1,13 @@
-var builder = WebApplication.CreateBuilder(args);
+using CustomerCRUD.DataContext;
+using CustomerCRUD.Repositories;
+using Microsoft.EntityFrameworkCore;
 
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MainContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiContext") ?? throw new InvalidOperationException("Connection string 'WebApiContext' not found.")));
+// Add services to the container.
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 // Add services to the container.
 
 builder.Services.AddControllers();
