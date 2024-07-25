@@ -1,9 +1,13 @@
 using CustomerCRUD.DataContext;
 using CustomerCRUD.Repositories;
 using Microsoft.EntityFrameworkCore;
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors();
+
 builder.Services.AddDbContext<MainContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebApiContext") ?? throw new InvalidOperationException("Connection string 'WebApiContext' not found.")));
 // Add services to the container.
@@ -28,10 +32,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseCors(x => x.AllowAnyOrigin()
-                  .AllowAnyMethod()
-                  .AllowAnyHeader());
-
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:3000"));
 app.MapControllers();
+
 
 app.Run();

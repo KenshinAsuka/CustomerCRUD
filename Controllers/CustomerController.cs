@@ -9,6 +9,7 @@ using CustomerCRUD.Repositories;
 using CustomerCRUD.Models;
 using System.Transactions;
 using CustomerCRUD.DTO;
+using Microsoft.AspNetCore.Cors;
 
 namespace CustomerCRUD.Controllers
 {
@@ -25,6 +26,7 @@ namespace CustomerCRUD.Controllers
 
         // GET: api/Customer
         [HttpGet]
+        [EnableCors("AllowAllOrigins")]
         public IActionResult Get()
         {
             var customers = _customerRepository.GetAll();
@@ -33,6 +35,7 @@ namespace CustomerCRUD.Controllers
 
         // GET: api/Customer/5
         [HttpGet("{id}")]
+        [EnableCors("AllowAllOrigins")]
         public IActionResult Get(Guid id)
         {
             var customer = _customerRepository.Get(id);
@@ -42,6 +45,7 @@ namespace CustomerCRUD.Controllers
         // PUT: api/Customer/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [EnableCors("AllowAllOrigins")]
         public IActionResult Put(string id, [FromBody] UpdateCustomerModel customer)
         {
             if (customer != null)
@@ -59,6 +63,7 @@ namespace CustomerCRUD.Controllers
         // POST: api/Customer
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         public IActionResult Post([FromBody] CreateCustomerModel customer)
         {
             try
@@ -90,6 +95,7 @@ namespace CustomerCRUD.Controllers
 
         // DELETE: api/Customer/5
         [HttpDelete("{id}")]
+        [EnableCors("AllowAllOrigins")]
         public IActionResult Delete(Guid id)
         {
             _customerRepository.Delete(id);
